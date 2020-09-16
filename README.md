@@ -15,7 +15,7 @@ The script **link_entries.xsl** resolves all references, i.e. provides all `@tar
 
 The script **unify.xsl** can be used to shorten all IDs uniformly and remove unneccessary whitespace (just for visual purposes). It also contains the final decision to make `<def>` elements contain `<p>` elements.
 
-#### Transformation overview (excluding encyclopedia specific rules)
+#### Transformation overview - `article` to `entry` structure (excluding encyclopedia specific rules)
 | Basic Structure | |
 | ------------- |:-------------:| 
 | `article`     | `entry @xml:id @xml:lang` | 
