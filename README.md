@@ -1,7 +1,10 @@
 # Transforming a historical, German encyclopedia XML corpus to TEI
 
 XSLT files documenting all transformations done to the original encyclopedia corpus (please refer to the [paper] for more information).
-The original encyclopedia corpus can be found [here](https://github.com/ThoraHagen/Encyc-Transformation) while the transformed corpus and its ODD can be found [here](https://github.com/ThoraHagen/Encyc-Transformation).
+
+The original encyclopedia corpus: [here](https://github.com/ThoraHagen/Encyc-Transformation).
+
+The transformed corpus and its ODD: [here](https://github.com/ThoraHagen/Encyc-Transformation).
 
 ### Basic transformation
 
