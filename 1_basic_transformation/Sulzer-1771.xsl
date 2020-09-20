@@ -134,46 +134,23 @@
 
     <!-- ________________________verse grouping with adjacent p (zenoPLm4n4) Tags________________________-->
 
-    <xsl:key name="kFollowing" match="p[preceding-sibling::*[1][self::p] and @class = 'zenoPLm4n4']"
-        use="
-            generate-id(preceding-sibling::p
-            [not(preceding-sibling::*[1][self::p]) and @class = 'zenoPLm4n4'][1])"/>
 
     <xsl:template
-        match="
-            p
-            [not(preceding-sibling::*[1][self::p[@class = 'zenoPLm4n4']]) and @class = 'zenoPLm4n4']">
-        <xsl:choose>
-            <xsl:when test="./ancestor::fn">
-                <lg>
-                    <xsl:call-template name="p"/>
-                    <xsl:apply-templates mode="copy" select="key('kFollowing', generate-id())"/>
-                </lg>
-            </xsl:when>
-            <xsl:otherwise>
-                <def>
-                    <lg>
-                        <xsl:call-template name="p"/>
-                        <xsl:apply-templates mode="copy" select="key('kFollowing', generate-id())"/>
-                    </lg>
-                </def>
-            </xsl:otherwise>
-        </xsl:choose>
-
+        match="br[(count(preceding-sibling::br) = 0) or not(count(preceding-sibling::br) mod 2 = 1)]">
+        <xsl:variable name="pos" select="count(./preceding-sibling::br) + 1"/>
+        <def>
+            <lg>
+                <xsl:for-each select="./following-sibling::p[count(preceding-sibling::br) = $pos]">
+                    <l>
+                        <xsl:apply-templates/>
+                    </l>
+                </xsl:for-each>
+            </lg>
+        </def>
     </xsl:template>
-
-    <xsl:template
-        match="p[preceding-sibling::*[1][self::p[@class = 'zenoPLm4n4']] and @class = 'zenoPLm4n4']"/>
-
-    <xsl:template match="p" mode="copy">
-        <xsl:call-template name="p"/>
-    </xsl:template>
-
-    <xsl:template match="p" mode="copy" name="p">
-        <l>
-            <xsl:apply-templates/>
-        </l>
-    </xsl:template>
+    
+    <xsl:template match="p[
+        preceding-sibling::br[1][(count(preceding-sibling::br) = 0) or not(count(preceding-sibling::br) mod 2 = 1)]]"/>
 
     <!-- ________________________Footnote handling________________________  -->
 

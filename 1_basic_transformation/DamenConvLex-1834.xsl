@@ -167,5 +167,21 @@
             </hi>
         </ref>
     </xsl:template>
+    
+    <xsl:template
+        match="article[lem='Caprice']" priority='2'>
+        <xsl:variable name="mis_text" select="./text()"/>
+        <entry xml:id="{concat(generate-id(.), $crtUri)}" xml:lang="de">
+            <form>
+                <term>
+                    <xsl:value-of select=".//lem"/>
+                </term>
+            </form>
+            <sense xml:id="{generate-id(.)}">
+                <xsl:value-of select="$mis_text"/>
+                <xsl:apply-templates/>
+            </sense>
+        </entry>
+    </xsl:template>
 
 </xsl:stylesheet>

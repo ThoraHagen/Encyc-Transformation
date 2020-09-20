@@ -170,6 +170,12 @@
             </lg>
     </xsl:template>
     
+    <xsl:template match="p[@class='zenoLY']" priority="2">
+        <l>
+            <xsl:apply-templates/>
+        </l>
+    </xsl:template>
+    
     
     <!-- ________________________more references with <i>________________________ -->
     

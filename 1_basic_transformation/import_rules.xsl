@@ -74,7 +74,7 @@
     <!-- ____________________ Images ____________________ -->
 
     <xsl:template match="image">
-        <figure xml:id="{generate-id()}">
+        <figure xml:id="{concat(generate-id(), '-f')}">
             <graphic url="{@src}"/>
             <xsl:if test="./imagetext">
                 <head>

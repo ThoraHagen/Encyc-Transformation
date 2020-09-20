@@ -164,7 +164,7 @@
     <xsl:template match="a[@name = '111']" priority="2"/>
 
     <xsl:template match="image[@src = 'Ro04430a.jpg']">
-        <figure xml:id="{generate-id()}">
+        <figure xml:id="{concat(generate-id(), '-f')}">
             <graphic url="{@src}"/>
             <head>
                 <xsl:value-of select="."/>
@@ -180,7 +180,7 @@
     <xsl:template match="p[preceding-sibling::tr]" priority="2">
         <row>
             <cell>
-                <xsl:apply-templates select="@* | node()"/>
+                <xsl:apply-templates/>
             </cell>
             <xsl:variable name="cells" select="preceding-sibling::tr[1]/td"/>
             <xsl:for-each select="$cells/*">
@@ -192,7 +192,7 @@
     <xsl:template match="p[following-sibling::tr]" priority="1">
         <row>
             <cell>
-                <xsl:apply-templates select="@* | node()"/>
+                <xsl:apply-templates/>
             </cell>
             <xsl:variable name="cells" select="following-sibling::tr[1]/td"/>
             <xsl:for-each select="$cells/*">

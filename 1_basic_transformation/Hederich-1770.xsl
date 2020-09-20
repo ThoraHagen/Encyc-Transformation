@@ -182,5 +182,15 @@
 
         <ref type="table" target="#Tab.{$t}"/>
     </xsl:template>
+    
+    <!-- ________________________first <b> is the headword________________________ -->
+    <xsl:template match="article/text/p[1]/b[not(preceding-sibling::*)]">
+        <term type="headword">
+            <hi rend="bold">
+                <xsl:apply-templates/>
+            </hi>
+        </term>
+    </xsl:template>
+    
 
 </xsl:stylesheet>

@@ -9,7 +9,7 @@
                those are very problematic to resolve though (e.g. Pataky) often due to very vague expressions as to what is referenced.
                References from that category also often have no match (not even by manual search).
     -->
-    <!-- These refs may sometimes not have a target due to ambiguous references or no matches (see above) -->
+    <!-- These refs do not have a target attribute due to ambiguous references or no matches (see above) -->
 
     <!-- Encycs where linking is necessary: -->
     <!-- Brockhaus 1809, 1837, 1911, DamenConvLex, Eisler 1904, 1912, Herder, Lueger, Mauthner, Meyers, Roell, Schmidt, Sulzer, Vollmer, Wander -->
@@ -376,6 +376,15 @@
         </xsl:choose>
 
     </xsl:template>
+    
+<!--    <xsl:template match="doc('Pataky-1898.xml')//tei:def[position() = last() and ./tei:ref[not(contains(@target, 'Dodd')) and not(contains(@target, 'Storch')) and not(contains(@target, 'Frank'))] and contains(string-join(./text()), 'Werke')]/text()[not(. eq '.') and not(contains(., 'Band'))]"/>-->
+<!--    <xsl:template match="doc('Pataky-1898.xml')//tei:entry[tei:form/tei:term[. eq 'Kühne, Elisabeth']]//tei:def/text()[contains(.,'Elisabeth')]"> Elisabeth, </xsl:template>-->
+    
+    <xsl:template match="doc('Sulzer-1771.xml')//tei:def[tei:lg[./text() eq '']]"/>
+    <xsl:template match="doc('Sulzer-1771.xml')//tei:p[tei:lg[./text() eq '']]"/>
+    <xsl:template match="doc('Sulzer-1771.xml')//tei:def[parent::tei:note]">
+        <xsl:apply-templates/>
+    </xsl:template>
 
     <!-- ______________________________Meyers______________________________ -->
     <!-- Meyers without "contains" -->
@@ -450,7 +459,7 @@
 
     <!-- give ID to figures as well -->
     <xsl:template match="tei:entry//tei:figure">
-        <figure xml:id="{generate-id()}">
+        <figure xml:id="{concat(generate-id(),'-f')}">
             <xsl:apply-templates/>
         </figure>
     </xsl:template>

@@ -117,8 +117,30 @@
     <!-- h4 with ['Zusätze und Ergänzungen] indicates following footnotes-->
     <!-- footnotes are grouped and moved to the end of the entry -->
     <!-- after these footnotes, the entry might continue -->
-
-    <xsl:template match="h4[following-sibling::p[plink]]" priority="2">
+    
+    <xsl:template match="text">
+          <xsl:for-each-group select="*" group-starting-with="//br|h4|startpage|page|sigel|p[plink[b]]">
+                    <def>
+                        <xsl:for-each select="current-group()[self::p]">
+                            <p><xsl:apply-templates/></p>
+                        </xsl:for-each>
+                    </def>
+                </xsl:for-each-group>
+    </xsl:template>
+    
+   
+   <xsl:template match="plink[parent::p[preceding-sibling::h4]]">
+       <xsl:variable name="lemma"
+           select="translate(./ancestor::article//lem/text(), ' []:-();,', '')"/>
+       <xsl:variable name="apos">'</xsl:variable>
+       <xsl:variable name="lem" select='translate($lemma, $apos, "")'/>
+       <xsl:variable name="fnnumber"
+           select="translate(./b/text(), ' []:-.*();,', '')"/>
+       <ref type='temp' xml:id="{concat($lem,'.', $fnnumber)}'">
+           <xsl:apply-templates/>
+       </ref>
+   </xsl:template>
+    <!--<xsl:template match="h4[following-sibling::p[plink]]" priority="2">
         <xsl:variable name="lemma"
             select="translate(./ancestor::article//lem/text(), ' []:-();,', '')"/>
         <xsl:variable name="apos">'</xsl:variable>
@@ -152,13 +174,13 @@
     <xsl:template match="article[descendant::h4]//p" priority="5"/>
 
     <xsl:template match="h4">
-        <!-- no references to these footnotes-->
+        <!-\- no references to these footnotes-\->
         <xsl:variable name="lemma"
             select="translate(./ancestor::article//lem/text(), ' []:-();,', '')"/>
         <xsl:variable name="apos">'</xsl:variable>
         <xsl:variable name="lem" select='translate($lemma, $apos, "")'/>
 
-        <!-- additions are moved -->
+        <!-\- additions are moved -\->
         <xsl:for-each select="./preceding-sibling::p">
             <def>
                 <xsl:apply-templates/>
@@ -167,7 +189,7 @@
         <note>
             <xsl:for-each-group select="./following-sibling::p | ./following-sibling::br"
                 group-ending-with="br">
-                <!-- xml:id via position() -> no references within the entry anyways -->
+                <!-\- xml:id via position() -> no references within the entry anyways -\->
                 <xsl:variable name="fnnumber" select="position()"/>
                 <note type="footnote" xml:id="{concat($lem,'.', $fnnumber)}">
                     <xsl:for-each select="current-group()[self::p]">
@@ -176,19 +198,21 @@
                 </note>
             </xsl:for-each-group>
         </note>
-    </xsl:template>
+    </xsl:template>-->
 
-    <xsl:template match="plink[parent::p[following-sibling::h4] and not(child::ls)]">
+    <xsl:template match="plink[parent::p[following-sibling::h4] and not(child::ls)]" priority="2">
         <xsl:variable name="lemma"
             select="translate(./ancestor::article//lem/text(), ' []:-();,', '')"/>
         <xsl:variable name="fnnumber" select="translate(./b/text(), ' []:-.();,*', '')"/>
         <xsl:variable name="apos">'</xsl:variable>
         <xsl:variable name="lem" select='translate($lemma, $apos, "")'/>
-        <ref type='footnote' target="{concat('#', $lem,'.', $fnnumber)}"/>
+        <ref type='footnote' target="{concat('#', $lem,'.', $fnnumber)}">
         <xsl:apply-templates/>
+        </ref>
     </xsl:template>
+  
 
-    <xsl:template match="plink[child::ls]">
+    <xsl:template match="plink[child::ls]" priority="2">
         <xsl:variable name="lemma" select="replace(./@href, '/.*/', '')"/>
         <ref type="entry" target="{$lemma}"/>
     </xsl:template>
@@ -207,10 +231,10 @@
                 </term>
             </form>
             <sense xml:id="{generate-id(.)}">
-                <xsl:for-each select=".//p[not(preceding-sibling::h4)]">
-                    <def>
+                <def><xsl:for-each select=".//p[not(preceding-sibling::h4)]">
+                    <p>
                         <xsl:apply-templates/>
-                    </def>
+                    </p>
                 </xsl:for-each>
                 <note>
                     <note type="footnote" xml:id="{concat($lem,'.')}">
@@ -218,7 +242,7 @@
                             <xsl:apply-templates/>
                         </xsl:for-each>
                     </note>
-                </note>
+                </note></def>
             </sense>
         </entry>
     </xsl:template>

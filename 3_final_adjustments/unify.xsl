@@ -11,15 +11,30 @@
             <xsl:apply-templates select="@* | node()"/>
         </xsl:copy>
     </xsl:template>
+    
+    <xsl:template match="tei:sense//tei:term">
+        <term type='headword'>
+            <xsl:apply-templates/>
+        </term>
+    </xsl:template>
+    
+    <!-- _____________add full image path_____________ -->
+    
+    <xsl:template match="tei:graphic">
+        <xsl:variable name="doc" select="base-uri()"/>
+        <xsl:variable name="doc" select="tokenize($doc, '/')[8]"/>
+        <xsl:variable name="doc" select="replace($doc, '\.xml', '')"/>
+        <graphic url='../Bilder/{$doc}/Images/{./@url}'>
+            <xsl:apply-templates/>
+        </graphic>
+    </xsl:template>
 
-    <!-- _____________remove whitespaces_____________ -->
+    <!-- _____________remove whitespaces and empty tags_____________ -->
 
     <xsl:template match="tei:sense/text()"/>
     <xsl:template match="tei:back/text()"/>
     <xsl:template match="tei:div/text()"/>
-
     <xsl:template match="tei:lb"/>
-
 
     <!-- _____________sort multiple <def> into paragraphs in one single <def>_____________ -->
 
@@ -97,6 +112,12 @@
             | doc('Vollmer-1874.xml')//tei:ref[@type = 'entry' and @target]">
         <xsl:variable name="subid" select="substring-before(./@target, '.xml')"/>
         <ref type="entry" target="{$subid}">
+            <xsl:apply-templates/>
+        </ref>
+    </xsl:template>
+    
+    <xsl:template match='tei:ref[@type="entry" and @target="#"]' priority='2'>
+        <ref type='entry'>
             <xsl:apply-templates/>
         </ref>
     </xsl:template>
