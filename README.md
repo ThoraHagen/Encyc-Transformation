@@ -1,6 +1,6 @@
 # Transforming a historical, German encyclopedia XML corpus to TEI
 
-XSLT files documenting all transformations done to the original encyclopedia corpus (please see the [paper] for more information).
+XSLT files documenting all transformations done to the original encyclopedia corpus (please see the "Twenty-two Historical Encyclopedias Encoded in TEI: a New Resource for the Digital Humanities" for more information).
 
 The original encyclopedia corpus:\
 [![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.4159492.svg)](http://dx.doi.org/10.5281/zenodo.4159492)
