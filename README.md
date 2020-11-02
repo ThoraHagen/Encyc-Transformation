@@ -3,7 +3,7 @@
 XSLT files documenting all transformations done to the original encyclopedia corpus (please see the paper "Twenty-two Historical Encyclopedias Encoded in TEI: a New Resource for the Digital Humanities" for more information).
 
 The original encyclopedia corpus:\
-[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.4159492.svg)](http://dx.doi.org/10.5281/zenodo.4159492)
+[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.4159491.svg)](http://dx.doi.org/10.5281/zenodo.4159491)
 
 The transformed corpus and its ODD:\
 [![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.4039570.svg)](http://dx.doi.org/10.5281/zenodo.4039570)
