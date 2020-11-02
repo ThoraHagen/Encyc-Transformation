@@ -149,6 +149,7 @@
     </xsl:template>
 
     <!-- ____________________footnote handling____________________  -->
+    
     <xsl:template match="fnref">
         <xsl:variable name="lemma"
             select="translate(./ancestor::article[child::text[child::fn]]/lem/text(), ' :-();,', '')"/>

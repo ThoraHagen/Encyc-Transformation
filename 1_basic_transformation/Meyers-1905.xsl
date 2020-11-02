@@ -9,8 +9,6 @@
     <xsl:import href="import_rules.xsl"/>
     <xsl:variable name="back" select="document('Meyers-1905-002-Anhang.xml')"/> 
     
-    <!-- Appendix -->
-    <!-- weitere Tags in figures untersuchen -->
 
     <!-- ________________________Basic TEI Structure________________________ -->
 

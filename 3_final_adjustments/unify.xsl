@@ -12,12 +12,6 @@
         </xsl:copy>
     </xsl:template>
     
-    <xsl:template match="tei:sense//tei:term">
-        <term type='headword'>
-            <xsl:apply-templates/>
-        </term>
-    </xsl:template>
-    
     <!-- _____________add full image path_____________ -->
     
     <xsl:template match="tei:graphic">
@@ -35,6 +29,8 @@
     <xsl:template match="tei:back/text()"/>
     <xsl:template match="tei:div/text()"/>
     <xsl:template match="tei:lb"/>
+    <xsl:template match="tei:note[. eq '']"/>
+    <xsl:template match="tei:p[. eq '']"/>
 
     <!-- _____________sort multiple <def> into paragraphs in one single <def>_____________ -->
 
@@ -51,7 +47,6 @@
             <xsl:apply-templates/>
         </p>
     </xsl:template>
-
 
     <!-- _____________unify ids_____________ -->
 
@@ -80,14 +75,17 @@
             | doc('Roell-1912.xml')//tei:ref[@type = 'entry' and @target]
             | doc('Sulzer-1771.xml')//tei:ref[@type = 'entry' and @target]
             | doc('Wander-1867.xml')//tei:ref[@type = 'entry' and @target]
-            | doc('Meyers-1905.xml')//tei:ref[@type = 'entry' and @target]">
+            | doc('Meyers-1905.xml')//tei:ref[@type = 'entry' and @target]
+            | doc('Meyers-1905.xml')//tei:ref[@type = 'appendix' and @target]
+            | doc('Brockhaus-1911.xml')//tei:ref[@type = 'appendix' and @target]">
         <xsl:variable name="subid" select="substring-before(./@target, '-001')"/>
         <xsl:variable name="subid" select="replace($subid, 'meyers', 'Meyers')"/>
-        <xsl:variable name="app" select="substring-after(./@xml:id, '.xml')"/>
-        <ref type="entry" target="{$subid}{$app}">
+        <xsl:variable name="app" select="substring-after(./@target, '.xml')"/>
+        <ref type="{./@type}" target="{$subid}{$app}">
             <xsl:apply-templates/>
         </ref>
     </xsl:template>
+    
 
     <xsl:template
         match="
@@ -120,6 +118,12 @@
         <ref type='entry'>
             <xsl:apply-templates/>
         </ref>
+    </xsl:template>
+      
+    <xsl:template match="tei:sense//tei:term">
+        <term type='headword'>
+            <xsl:apply-templates/>
+        </term>
     </xsl:template>
 
 </xsl:stylesheet>

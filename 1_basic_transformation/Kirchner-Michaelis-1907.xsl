@@ -7,7 +7,7 @@
     <xsl:import href="import_rules.xsl"/>
     <xsl:import href="preface.xsl"/>
     
-    <!-- Basic TEI Structure -->
+    <!-- ________________________Basic TEI Structure________________________ -->
 
     <xsl:template match="/">
         <TEI>
@@ -81,7 +81,7 @@
         </TEI>
     </xsl:template>
     
-    <!-- missing <p> -->
+    <!-- ________________________missing <p>________________________ -->
     
     <xsl:template match="article[lem eq 'psychophysisches Gesetz']/text/text()[contains(., 'Konst')]">
         <def>
@@ -89,11 +89,11 @@
         </def>
     </xsl:template>
     
-    <!-- floating 'R' -->
+    <!-- ________________________floating 'R'________________________ -->
     
     <xsl:template match="articlegroup[@name='A']//h2"/>
     
-    <!-- external references -->
+    <!-- ________________________external references________________________ -->
 
     <xsl:template match="article/text//i[(contains(substring(preceding-sibling::text()[1], string-length(preceding-sibling::text()[1]) -10),  '. Vgl. ')
         or (preceding-sibling::i[(contains(substring(preceding-sibling::text()[1], string-length(preceding-sibling::text()[1]) -10),  '. Vgl. '))])

@@ -5,7 +5,6 @@
 
     <!-- This stylesheet removes anchors (Lueger and Roell specific) and gives ref[@type='image'] their updated figure targets -->
 
-
     <xsl:template match="tei:anchor"/>
     <xsl:template match="tei:sense/text()"/>
 

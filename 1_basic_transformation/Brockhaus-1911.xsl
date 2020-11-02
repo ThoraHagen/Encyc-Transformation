@@ -3,10 +3,9 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" version="2.0"
     xmlns="http://www.tei-c.org/ns/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0">
 
-    <xsl:variable name="file" select="document('Brockhaus-1911-000.xml')"> </xsl:variable>
-    <xsl:variable name="back" select="document('Brockhaus-1911-002-Anhang.xml')"> </xsl:variable>
+    <xsl:variable name="file" select="document('Brockhaus-1911-000.xml')"/> 
+    <xsl:variable name="back" select="document('Brockhaus-1911-002-Anhang.xml')"/> 
     <xsl:output method="xml" indent="yes"/>
-
     <xsl:import href="import_rules.xsl"/>
 
 
@@ -93,7 +92,6 @@
     </xsl:template>
 
     <!-- ________________________footnote handling (only applies to preface)________________________ -->
-
     <xsl:template match="fnref">
         <xsl:variable name="lemma"
             select="translate(./ancestor::article[not(descendant::sigel)]/lem/text(), ' :-(),', '')"/>
@@ -133,6 +131,16 @@
     </xsl:template>
 
     <xsl:template match="article/text//i[preceding-sibling::node()[1]/name() = 'plink']"/>
+    <xsl:template
+        match="
+        article/text//i[(contains(substring(preceding-sibling::text()[1], string-length(preceding-sibling::text()[1]) - 9), 'Tafel: '))]">
+        <xsl:variable name="lemma" select=".//text()"/>
+        <ref type="tafel" target="{$lemma}">
+            <hi rend="italic">
+                <xsl:apply-templates/>
+            </hi>
+        </ref>
+    </xsl:template>
 
 
     <!-- ________________________appendix________________________ -->
@@ -264,11 +272,5 @@
             <xsl:apply-templates mode="back"/>
         </cell>
     </xsl:template>
-
-    <!--    <xsl:template match="imagetext" mode="back">
-        <note type="imagetext">
-            <xsl:apply-templates mode="back"/>
-        </note>
-    </xsl:template>-->
 
 </xsl:stylesheet>

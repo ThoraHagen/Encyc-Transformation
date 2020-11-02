@@ -4,7 +4,6 @@
     xmlns="http://www.tei-c.org/ns/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0">
 
     <xsl:output method="xml" indent="yes"/>
-
     <xsl:import href="import_rules.xsl"/>
 
     <!-- ________________________Basic TEI Structure________________________ -->
@@ -133,8 +132,7 @@
         </xsl:choose>
     </xsl:template>
 
-    <!-- implied references through <spa>-->
-
+    <!-- ________________________implied references through <spa>________________________-->
     <xsl:template match='catdiv[@name = "Lexikalischer Artikel"]//spa'>
         <xsl:variable name="string"
             select="replace(./text()[last()], 'Biographie| s\.|siehe|Werke| u\.|:|Ergänzg\.|Ergänzung|Band|weitere|allen|Inhalt|beiden|Weitere|unter|\)|\(', '')"/>
@@ -250,9 +248,7 @@
                         </ref>
                     </xsl:otherwise>
                 </xsl:choose>
-
             </xsl:otherwise>
-
         </xsl:choose>
     </xsl:template>
 

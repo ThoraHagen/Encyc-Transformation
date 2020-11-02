@@ -3,7 +3,7 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" version="2.0"
     xmlns="http://www.tei-c.org/ns/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0">
 
-    <xsl:variable name="file" select="document('Sulzer-1771-000.xml')"> </xsl:variable>
+    <xsl:variable name="file" select="document('Sulzer-1771-000.xml')"/> 
     <xsl:output method="xml" indent="yes"/>
 
     <xsl:import href="import_rules.xsl"/>
@@ -133,7 +133,6 @@
     </xsl:template>
 
     <!-- ________________________verse grouping with adjacent p (zenoPLm4n4) Tags________________________-->
-
 
     <xsl:template
         match="br[(count(preceding-sibling::br) = 0) or not(count(preceding-sibling::br) mod 2 = 1)]">

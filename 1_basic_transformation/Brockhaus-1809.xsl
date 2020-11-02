@@ -3,12 +3,10 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" version="2.0"
     xmlns="http://www.tei-c.org/ns/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0">
 
-    <xsl:variable name="file" select="document('Brockhaus-1809-000.xml')"> </xsl:variable>
+    <xsl:variable name="file" select="document('Brockhaus-1809-000.xml')"/> 
     <xsl:output method="xml" indent="yes"/>
-
     <xsl:import href="import_rules.xsl"/>
     <xsl:import href="preface.xsl"/>
-
 
     <!-- ________________________Basic TEI Structure________________________ -->
 
@@ -272,7 +270,9 @@
             article/text//i[(contains(substring(preceding-sibling::text()[1], string-length(preceding-sibling::text()[1]) - 8), 'Art. ')
             or contains(substring(preceding-sibling::text()[1], string-length(preceding-sibling::text()[1]) - 6), 'S. ')
             or contains(substring(preceding-sibling::text()[1], string-length(preceding-sibling::text()[1]) - 6), 's. ')
-            or contains(substring(preceding-sibling::text()[1], string-length(preceding-sibling::text()[1]) - 8), 'Artikel'))]">
+            or contains(substring(preceding-sibling::text()[1], string-length(preceding-sibling::text()[1]) - 9), 'd. Art.')
+            or contains(substring(preceding-sibling::text()[1], string-length(preceding-sibling::text()[1]) - 8), 'Artikel')
+            or contains(substring(following-sibling::text()[1], 1, 7), 's. d.'))]">
         <xsl:variable name="lemma" select=".//text()"/>
         <ref type="entry" target="{$lemma}">
             <hi rend="italic">

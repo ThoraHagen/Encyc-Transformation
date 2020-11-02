@@ -7,8 +7,6 @@
 
     <!-- Base script for TEI transformation. -->
 
-
-
     <!-- ____________________ Identity Transformation for development ____________________ -->
 
     <!-- <xsl:template match="*">

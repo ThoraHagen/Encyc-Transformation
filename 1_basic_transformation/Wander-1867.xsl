@@ -3,7 +3,7 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" version="2.0"
     xmlns="http://www.tei-c.org/ns/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0">
 
-    <xsl:variable name="file" select="document('Wander-1867-000.xml')"> </xsl:variable>
+    <xsl:variable name="file" select="document('Wander-1867-000.xml')"/> 
     <xsl:output method="xml" indent="yes"/>
 
     <xsl:import href="import_rules.xsl"/>
@@ -117,6 +117,8 @@
     <!-- h4 with ['Zusätze und Ergänzungen] indicates following footnotes-->
     <!-- footnotes are grouped and moved to the end of the entry -->
     <!-- after these footnotes, the entry might continue -->
+    <!-- cont. in wander1.xsl, wander2.xsl -->
+    <!-- here, a hierarchy is first established -->
     
     <xsl:template match="text">
           <xsl:for-each-group select="*" group-starting-with="//br|h4|startpage|page|sigel|p[plink[b]]">
@@ -140,65 +142,6 @@
            <xsl:apply-templates/>
        </ref>
    </xsl:template>
-    <!--<xsl:template match="h4[following-sibling::p[plink]]" priority="2">
-        <xsl:variable name="lemma"
-            select="translate(./ancestor::article//lem/text(), ' []:-();,', '')"/>
-        <xsl:variable name="apos">'</xsl:variable>
-        <xsl:variable name="lem" select='translate($lemma, $apos, "")'/>
-        <xsl:for-each select="./preceding-sibling::p">
-            <def>
-                <xsl:apply-templates/>
-            </def>
-        </xsl:for-each>
-        <xsl:for-each select="./following-sibling::p[not(plink) and not(preceding-sibling::br[1]/following-sibling::p[plink])]">
-            <def>
-                <xsl:apply-templates/>
-            </def>
-        </xsl:for-each>
-        <note>
-            <xsl:for-each-group select="./following-sibling::p | ./following-sibling::br"
-                group-ending-with="br">
-                <xsl:variable name="fnnumber"
-                    select="translate(.//plink/b/text(), ' []:-.*();,', '')"/>
-                <xsl:if test="not($fnnumber eq '')">
-                    <note type="footnote" xml:id="{concat($lem,'.', $fnnumber)}">
-                        <xsl:for-each select="current-group()[self::p]">
-                            <xsl:apply-templates/>
-                        </xsl:for-each>
-                    </note>
-                </xsl:if>
-            </xsl:for-each-group>
-        </note>
-    </xsl:template>
-
-    <xsl:template match="article[descendant::h4]//p" priority="5"/>
-
-    <xsl:template match="h4">
-        <!-\- no references to these footnotes-\->
-        <xsl:variable name="lemma"
-            select="translate(./ancestor::article//lem/text(), ' []:-();,', '')"/>
-        <xsl:variable name="apos">'</xsl:variable>
-        <xsl:variable name="lem" select='translate($lemma, $apos, "")'/>
-
-        <!-\- additions are moved -\->
-        <xsl:for-each select="./preceding-sibling::p">
-            <def>
-                <xsl:apply-templates/>
-            </def>
-        </xsl:for-each>
-        <note>
-            <xsl:for-each-group select="./following-sibling::p | ./following-sibling::br"
-                group-ending-with="br">
-                <!-\- xml:id via position() -> no references within the entry anyways -\->
-                <xsl:variable name="fnnumber" select="position()"/>
-                <note type="footnote" xml:id="{concat($lem,'.', $fnnumber)}">
-                    <xsl:for-each select="current-group()[self::p]">
-                        <xsl:apply-templates/>
-                    </xsl:for-each>
-                </note>
-            </xsl:for-each-group>
-        </note>
-    </xsl:template>-->
 
     <xsl:template match="plink[parent::p[following-sibling::h4] and not(child::ls)]" priority="2">
         <xsl:variable name="lemma"

@@ -22,7 +22,7 @@
         </xsl:copy>
     </xsl:template>
 
-    <xsl:template match="tei:ref[@type = 'entry' and @target]" priority="2">
+    <xsl:template match="tei:ref[@type = 'entry' and @target]">
         <xsl:variable name="lemma" select="@target"/>
         <xsl:variable name="lemma2" select="string-join(./text())"/>
         <xsl:variable name="id" select="//tei:entry[./tei:form/tei:term/text() eq $lemma]/@xml:id"/>
@@ -178,7 +178,95 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:when>
-
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template
+        match="
+        doc('Brockhaus-1911.xml')//tei:ref[@type = 'appendix']">
+        <xsl:variable name="lemma" select="translate(@target, '.;:,', '')"/>
+        <xsl:variable name="term" select="//tei:div[@type='Beilagen']//tei:entry[./tei:form/tei:term/text() eq $lemma]"/>
+        <xsl:variable name="id" select="$term/@xml:id"/>
+        <xsl:choose>
+            <xsl:when test="count($id) = 1">
+                <ref type="appendix" target="#{$id}">
+                    <xsl:apply-templates/>
+                </ref>
+            </xsl:when>
+            
+            <!-- what if no ID can be found -->
+            <xsl:when test="empty($id) or count($id) > 1">
+                <xsl:variable name="id"
+                    select="//tei:entry[contains($lemma, ./tei:form/tei:term/text())]/@xml:id"/>
+                <xsl:choose>
+                    <xsl:when test="count($id) = 1">
+                        <ref type="appendix" target="#{$id}">
+                            <xsl:apply-templates/>
+                        </ref>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:variable name="id"
+                            select="//tei:entry[contains(./tei:form/tei:term/text(), $lemma)]/@xml:id"/>
+                        <xsl:choose>
+                            <xsl:when test="count($id) = 1">
+                                <ref type="appendix" target="#{$id}">
+                                    <xsl:apply-templates/>
+                                </ref>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <ref type="appendix" target="#{$id[2]}">
+                                    <xsl:apply-templates/>
+                                </ref>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template
+        match="
+        doc('Brockhaus-1911.xml')//tei:ref[@type = 'tafel']">
+        <xsl:variable name="lemma" select="translate(@target, '.;:,', '')"/>
+        <xsl:variable name="lemma" select="replace($lemma, '^ ', '')"/>
+        <xsl:variable name="term" select="//tei:back/tei:div[@type='KartenundTafeln']//tei:entry[./tei:form/tei:term/text() eq $lemma]"/>
+        <xsl:variable name="id" select="$term/@xml:id"/>
+        <xsl:choose>
+            <xsl:when test="count($id) = 1">
+                <ref type="appendix" target="#{$id}">
+                    <xsl:apply-templates/>
+                </ref>
+            </xsl:when>
+            
+            <!-- what if no ID can be found -->
+            <xsl:when test="empty($id) or count($id) > 1">
+                <xsl:variable name="id"
+                    select="//tei:entry[contains($lemma, ./tei:form/tei:term/text())]/@xml:id"/>
+                <xsl:choose>
+                    <xsl:when test="count($id) = 1">
+                        <ref type="appendix" target="#{$id}">
+                            <xsl:apply-templates/>
+                        </ref>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:variable name="id"
+                            select="//tei:entry[contains(./tei:form/tei:term/text(), $lemma)]/@xml:id"/>
+                        <xsl:choose>
+                            <xsl:when test="count($id) = 1">
+                                <ref type="appendix" target="#{$id}">
+                                    <xsl:apply-templates/>
+                                </ref>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <ref type="appendix">
+                                    <xsl:apply-templates/>
+                                </ref>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
         </xsl:choose>
     </xsl:template>
 
@@ -369,7 +457,7 @@
                 </xsl:choose>
             </xsl:when>
             <xsl:otherwise>
-                <ref type="entry" target="{$lemma2}">
+                <ref type="entry">
                     <xsl:apply-templates/>
                 </ref>
             </xsl:otherwise>
@@ -377,8 +465,8 @@
 
     </xsl:template>
     
-<!--    <xsl:template match="doc('Pataky-1898.xml')//tei:def[position() = last() and ./tei:ref[not(contains(@target, 'Dodd')) and not(contains(@target, 'Storch')) and not(contains(@target, 'Frank'))] and contains(string-join(./text()), 'Werke')]/text()[not(. eq '.') and not(contains(., 'Band'))]"/>-->
-<!--    <xsl:template match="doc('Pataky-1898.xml')//tei:entry[tei:form/tei:term[. eq 'Kühne, Elisabeth']]//tei:def/text()[contains(.,'Elisabeth')]"> Elisabeth, </xsl:template>-->
+    <xsl:template match="tei:def[position() = last() and ./tei:ref[not(contains(@target, 'Dodd')) and not(contains(@target, 'Storch')) and not(contains(@target, 'Frank'))] and contains(string-join(./text()), 'Werke')]/text()[not(. eq '.') and not(contains(., 'Band'))]"/>
+    <xsl:template match="tei:entry[tei:form/tei:term[. eq 'Kühne, Elisabeth']]//tei:def/text()[contains(.,'Elisabeth')]"> Elisabeth, </xsl:template>
     
     <xsl:template match="doc('Sulzer-1771.xml')//tei:def[tei:lg[./text() eq '']]"/>
     <xsl:template match="doc('Sulzer-1771.xml')//tei:p[tei:lg[./text() eq '']]"/>

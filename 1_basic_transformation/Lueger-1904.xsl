@@ -4,18 +4,16 @@
     xmlns="http://www.tei-c.org/ns/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:fn=" http://www.w3.org/2005/xpath-functions">
 
-    <xsl:variable name="file" select="document('Lueger-1904-000.xml')"> </xsl:variable>
+    <xsl:variable name="file" select="document('Lueger-1904-000.xml')"/> 
     <xsl:output method="xml" indent="yes"/>
 
     <xsl:import href="import_rules.xsl"/>
     <xsl:import href="preface.xsl"/>
 
-
     <!-- Note: The original XML file is not well formed (images have two "width" attributes).
             - "width" was removed entirely to produce well formed XML.
     -->
-
-
+    
     <!-- ________________________Basic TEI Structure________________________ -->
 
     <xsl:template match="/">
@@ -347,6 +345,5 @@
 
     <xsl:template match="article[lem eq 'Meridiankonvergenz']//fn"/>
     <xsl:template match="article[lem eq 'Eisenbahnverwaltung']//fn"/>
-
 
 </xsl:stylesheet>

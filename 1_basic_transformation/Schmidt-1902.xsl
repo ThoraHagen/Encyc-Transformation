@@ -8,9 +8,6 @@
     <xsl:import href="import_rules.xsl"/>
     <xsl:import href="preface.xsl"/>
 
-    <!-- mehrere lgs sind durch def getrennt -->
-    <!-- mehrere verse zusammennehmen ? -->
-
 
     <!-- ________________________Basic TEI Structure________________________ -->
 

@@ -7,7 +7,6 @@
     <xsl:import href="import_rules.xsl"/>
     <xsl:import href="preface.xsl"/>
     
-
     <!-- ________________________Basic TEI Structure________________________ -->
 
     <xsl:template match="/">

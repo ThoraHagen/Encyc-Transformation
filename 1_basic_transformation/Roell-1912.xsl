@@ -4,11 +4,10 @@
     xmlns="http://www.tei-c.org/ns/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0">
     <xsl:output method="xml" indent="yes"/>
 
-    <xsl:variable name="file" select="document('Roell-1912-000.xml')"> </xsl:variable>
+    <xsl:variable name="file" select="document('Roell-1912-000.xml')"/> 
 
     <xsl:import href="import_rules.xsl"/>
     <xsl:import href="preface.xsl"/>
-
 
     <!-- ________________________Basic TEI Structure________________________ -->
 
@@ -173,7 +172,6 @@
     </xsl:template>
 
     <xsl:template match="table//fnref" priority="2"/>
-
 
     <!-- ________________________Roell specific table/p-tag handling________________________ -->
 
