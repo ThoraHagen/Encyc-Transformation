@@ -6,7 +6,7 @@ The original encyclopedia corpus:\
 [![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.4159491.svg)](http://dx.doi.org/10.5281/zenodo.4159491)
 
 The transformed corpus and its ODD:\
-[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.4039570.svg)](http://dx.doi.org/10.5281/zenodo.4039570)
+[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.4039569.svg)](http://dx.doi.org/10.5281/zenodo.4039569)
 
 ### Basic transformation
 
